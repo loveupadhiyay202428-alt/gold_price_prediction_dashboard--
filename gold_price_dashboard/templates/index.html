@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gold Price Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- 🔥 FULL BACKGROUND SLIDESHOW -->
+<div class="slideshow">
+    <div class="slide s1"></div>
+    <div class="slide s2"></div>
+    <div class="slide s3"></div>
+    <div class="slide s4"></div>
+    <div class="slide s5"></div>
+    <div class="slide s6"></div>
+    <div class="slide s7"></div>
+    <div class="slide s8"></div>
+</div>
+
+<div class="navbar">
+    💰 Gold Price Prediction Dashboard
+</div>
+
+<div class="container">
+
+    <!-- LEFT SECTION -->
+    <div class="left">
+        <h1>Smart Gold Price Prediction</h1>
+        <p class="subtitle">
+            Predict Daily, Weekly & Yearly Gold Prices using Machine Learning
+        </p>
+
+        <!-- ================= PREDICTION FORM ================= -->
+        <form method="POST" class="predict-form">
+
+            <!-- YEAR INPUT -->
+            <input type="number" name="year"
+                placeholder="Enter Year (e.g. 2022)"
+                required min="2000" max="2100">
+
+            <!-- PERIOD INPUT -->
+            <input type="text" name="period"
+                placeholder="Enter period: daily / weekly / monthly"
+                required>
+
+            <button type="submit" id="predictBtn">
+                🔮 Predict
+            </button>
+
+            <!-- LOADING TEXT -->
+            <div id="loading-text">
+                ⏳ Predicting Gold Price, please wait...
+            </div>
+
+        </form>
+
+        {% if prediction %}
+
+        <!-- ================= ROW 1 ================= -->
+        <div class="row-flex">
+
+            <div class="box graph-box">
+                <h3>Gold Price Trend</h3>
+                <img src="{{ url_for('static', filename='graph.png') }}"
+                     alt="Gold Price Trend">
+            </div>
+
+            <div class="box result">
+                <h2>Predicted Gold Price</h2>
+                <h1>₹ {{ prediction }}</h1>
+            </div>
+
+        </div>
+
+        <!-- ================= ROW 2 ================= -->
+        <div class="row-flex">
+
+            {% if forecast %}
+            <div class="box table-box">
+                <h3>📅 Next 7 Days Gold Price Prediction</h3>
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Predicted Price (₹)</th>
+                    </tr>
+                    {% for row in forecast %}
+                    <tr>
+                        <td>{{ row.date }}</td>
+                        <td>₹ {{ row.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endif %}
+
+            <div class="box insight-box">
+                <h3>📌 Prediction Insight</h3>
+                <p>
+                    Based on historical gold price data from 2014 to 2025,
+                    the machine learning model analyzes long-term trends
+                    and predicts future prices.
+                    This prediction is statistical and may vary due to
+                    real-world economic and market conditions.
+                </p>
+            </div>
+
+        </div>
+
+        {% endif %}
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<div class="footer">
+    © 2026 | Team Leader: Pintu Kumar
+</div>
+
+</body>
+</html>
